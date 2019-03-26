@@ -2,6 +2,7 @@
 
 use App\Entity\Joke;
 use App\Entity\JokeLabel;
+use App\Entity\JokeSource;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -14,7 +15,11 @@ class JokeController extends \Symfony\Bundle\FrameworkBundle\Controller\Abstract
 	 */
 	public function index() {
 		$labels = $this->getDoctrine()->getRepository(JokeLabel::class)->findAll();
-		return $this->render('Joke/index.html.twig', ['labels' => $labels]);
+		$sources = $this->getDoctrine()->getRepository(JokeSource::class)->findAll();
+		return $this->render('Joke/index.html.twig', [
+			'labels' => $labels,
+			'sources' => $sources,
+		]);
 	}
 
 	/**
@@ -30,6 +35,30 @@ class JokeController extends \Symfony\Bundle\FrameworkBundle\Controller\Abstract
 	 */
 	public function show(Joke $joke) {
 		return $this->render('Joke/show.html.twig', ['joke' => $joke]);
+	}
+
+	/**
+	 * @Route("/labels")
+	 */
+	public function indexLabels() {
+		$labels = $this->getDoctrine()->getRepository(JokeLabel::class)->findAll();
+		return $this->render('Joke/indexLabels.html.twig', ['labels' => $labels]);
+	}
+
+	/**
+	 * @Route("/sources")
+	 */
+	public function indexSources() {
+		$sources = $this->getDoctrine()->getRepository(JokeSource::class)->findAll();
+		return $this->render('Joke/indexSources.html.twig', ['sources' => $sources]);
+	}
+
+	/**
+	 * @Route("/sources/{slug}")
+	 */
+	public function listBySource(JokeSource $source) {
+		$jokes = $source->getJokes();
+		return $this->render('Joke/listBySource.html.twig', ['source' => $source, 'jokes' => $jokes]);
 	}
 
 	/**

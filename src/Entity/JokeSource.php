@@ -35,6 +35,16 @@ class JokeSource {
 	 */
 	private $title;
 
+	/**
+	 * @ORM\Column(type="string", length=100)
+	 */
+	private $slug;
+
+	/**
+	 * @ORM\Column(type="integer")
+	 */
+	private $nrOfJokes;
+
 	public function __construct() {
 		$this->jokes = new ArrayCollection();
 	}
@@ -72,6 +82,26 @@ class JokeSource {
 
 	public function setTitle(string $title) {
 		$this->title = $title;
+	}
+
+	public function getName() {
+		return implode('. ', array_filter([$this->author, $this->title]));
+	}
+
+	public function getSlug(): ?string {
+		return $this->slug;
+	}
+
+	public function setSlug(string $slug) {
+		$this->slug = $slug;
+	}
+
+	public function getNrOfJokes(): ?int {
+		return $this->nrOfJokes;
+	}
+
+	public function setNrOfJokes(int $nrOfJokes) {
+		$this->nrOfJokes = $nrOfJokes;
 	}
 
 }

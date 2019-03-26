@@ -30,6 +30,11 @@ class JokeLabel {
 	 */
 	private $jokes;
 
+	/**
+	 * @ORM\Column(type="integer")
+	 */
+	private $nrOfJokes;
+
 	public function __construct() {
 		$this->jokes = new ArrayCollection();
 	}
@@ -59,6 +64,14 @@ class JokeLabel {
 	 */
 	public function getJokes(): Collection {
 		return $this->jokes;
+	}
+
+	public function getNrOfJokes(): ?int {
+		return $this->nrOfJokes;
+	}
+
+	public function setNrOfJokes(int $nrOfJokes) {
+		$this->nrOfJokes = $nrOfJokes;
 	}
 
 }
