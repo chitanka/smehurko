@@ -1,0 +1,7 @@
+{% extends 'base.html.twig' %}
+{% block content %}
+	<h1>{{ label.name }}</h1>
+	{% for joke in jokes %}
+		{% include 'Joke/joke.html.twig' %}
+	{% endfor %}
+{% endblock %}

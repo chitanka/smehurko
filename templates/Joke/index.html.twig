@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+{% block content %}
+	<h1>Категории</h1>
+	<div class="list-group">
+	{% for label in labels %}
+		<a href="{{ path('app_joke_listbylabel', {slug: label.slug}) }}" class="list-group-item list-group-item-action">{{ label.name }}</a>
+	{% endfor %}
+	</div>
+{% endblock %}
