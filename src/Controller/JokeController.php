@@ -31,7 +31,7 @@ class JokeController extends \Symfony\Bundle\FrameworkBundle\Controller\Abstract
 	}
 
 	/**
-	 * @Route("/{id}", requirements={"id"="\d+"})
+	 * @Route("/{id<\d+>}")
 	 */
 	public function show(Joke $joke) {
 		return $this->render('Joke/show.html.twig', ['joke' => $joke]);
