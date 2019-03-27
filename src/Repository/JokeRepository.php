@@ -16,14 +16,11 @@ class JokeRepository extends ServiceEntityRepository {
 		parent::__construct($registry, Joke::class);
 	}
 
-	/**
-	* @return Joke[]
-	*/
-	public function findRecent($maxResults = null) {
+	public function findRecent(int $maxResults = null) {
 		return $this->createQueryBuilder('j')
 			->orderBy('j.id', 'DESC')
 			->setMaxResults($maxResults ?? 10)
-			->getQuery()->getResult();
+			->getQuery();
 	}
 
 	/**

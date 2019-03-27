@@ -1,3 +1,6 @@
+{% if jokes is not defined and pager is defined %}
+	{% set jokes = pager.currentPageResults %}
+{% endif %}
 {% for joke in jokes %}
 	{% include 'Joke/joke.html.twig' %}
 {% endfor %}

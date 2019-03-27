@@ -3,12 +3,13 @@
 use App\Entity\Joke;
 use App\Entity\JokeLabel;
 use App\Entity\JokeSource;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/jokes")
  */
-class JokeController extends \Symfony\Bundle\FrameworkBundle\Controller\AbstractController {
+class JokeController extends Controller {
 
 	/**
 	 * @Route("/")
@@ -56,17 +57,17 @@ class JokeController extends \Symfony\Bundle\FrameworkBundle\Controller\Abstract
 	/**
 	 * @Route("/sources/{slug}")
 	 */
-	public function listBySource(JokeSource $source) {
-		$jokes = $source->getJokes();
-		return $this->render('Joke/listBySource.html.twig', ['source' => $source, 'jokes' => $jokes]);
+	public function listBySource(Request $request, JokeSource $source) {
+		$pager = $this->pager($request, $source->getJokes());
+		return $this->render('Joke/listBySource.html.twig', ['source' => $source, 'pager' => $pager]);
 	}
 
 	/**
 	 * @Route("/{slug}")
 	 */
-	public function listByLabel(JokeLabel $label) {
-		$jokes = $label->getJokes();
-		return $this->render('Joke/listByLabel.html.twig', ['label' => $label, 'jokes' => $jokes]);
+	public function listByLabel(Request $request, JokeLabel $label) {
+		$pager = $this->pager($request, $label->getJokes());
+		return $this->render('Joke/listByLabel.html.twig', ['label' => $label, 'pager' => $pager]);
 	}
 
 }
