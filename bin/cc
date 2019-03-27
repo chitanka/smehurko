@@ -1,0 +1,8 @@
+#!/bin/bash
+web_server_user=${1:-www-data}
+cd `dirname $0`/..
+mv var/cache/prod var/cache/prod_old && mkdir var/cache/prod
+bin/console cache:warmup --env=prod
+sudo chown -R $web_server_user. var/cache/prod
+sudo chmod -R g+rw var/cache/prod
+sudo rm var/cache/prod_old -rf
