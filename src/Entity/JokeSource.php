@@ -85,7 +85,10 @@ class JokeSource {
 	}
 
 	public function getName() {
-		return implode('. ', array_filter([$this->author, $this->title]));
+		if (empty($this->author)) {
+			return $this->title;
+		}
+		return $this->title.' ('.$this->author.')';
 	}
 
 	public function getSlug(): ?string {
