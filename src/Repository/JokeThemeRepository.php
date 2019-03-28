@@ -16,8 +16,8 @@ class JokeThemeRepository extends ServiceEntityRepository {
 
     /** @return JokeTheme[] */
 	public function findAll() {
-		return $this->createQueryBuilder('l')
-			->orderBy('l.name', 'ASC')
+		return $this->createQueryBuilder('e')
+			->orderBy('e.name', 'ASC')
 			->getQuery()->getResult();
 	}
 }
