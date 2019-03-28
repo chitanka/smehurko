@@ -1,8 +1,0 @@
-<h2>Категории</h2>
-<div class="list-group">
-{% for label in labels %}
-	<a href="{{ path('app_joke_listbylabel', {slug: label.slug}) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">{{ label.name }}
-		<span class="badge badge-secondary badge-pill">{{ label.nrOfJokes }}</span>
-	</a>
-{% endfor %}
-</div>

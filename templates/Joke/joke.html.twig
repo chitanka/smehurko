@@ -10,11 +10,11 @@
 	</div>
 	<footer class="card-footer joke-links">
 		<a href="{{ path('app_joke_show', {id: joke.id}) }}" class="card-link text-muted" title="Пряка връзка към смешката"><span class="fas fa-link"></span></a>
-		{% for label in joke.labels %}
-			<a href="{{ path('app_joke_listbylabel', {slug: label.slug}) }}" class="card-link text-muted"><span class="fas fa-tag"></span> {{ label.name }}</a>
+		{% for theme in joke.themes %}
+			<a href="{{ path('app_joke_listbytheme', {slug: theme.slug}) }}" class="card-link text-muted"><span class="fas fa-tag"></span> {{ theme.name }}</a>
 		{% endfor %}
 		{% if joke.source %}
-			<a href="{{ joke.source.url }}" target="_blank" class="card-link text-muted" title="Източник"><span class="fas fa-book"></span> {{ joke.source.author ? joke.source.author~'.' : '' }} <i>{{ joke.source.title }}</i></a>
+			<a href="{{ path('app_joke_listbysource', {slug: joke.source.slug}) }}" class="card-link text-muted" title="Източник"><span class="fas fa-book"></span> {{ joke.source.author ? joke.source.author~'.' : '' }} <i>{{ joke.source.title }}</i></a>
 		{% endif %}
 	</footer>
 </article>

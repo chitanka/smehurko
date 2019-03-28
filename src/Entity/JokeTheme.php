@@ -5,9 +5,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\JokeLabelRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\JokeThemeRepository")
  */
-class JokeLabel {
+class JokeTheme {
 	/**
 	 * @ORM\Id()
 	 * @ORM\GeneratedValue()
@@ -26,7 +26,7 @@ class JokeLabel {
 	private $slug;
 
 	/**
-	 * @ORM\ManyToMany(targetEntity="App\Entity\Joke", mappedBy="labels")
+	 * @ORM\ManyToMany(targetEntity="App\Entity\Joke", mappedBy="themes")
 	 */
 	private $jokes;
 

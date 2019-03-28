@@ -1,11 +1,5 @@
 {% extends 'base.html.twig' %}
 {% block content %}
-<div class="row">
-	<div class="col-md">
-		{% include 'Joke/labels.html.twig' %}
-	</div>
-	<div class="col-md">
-		{% include 'Joke/sources.html.twig' %}
-	</div>
-</div>
+	{% include 'Joke/themes.html.twig' %}
+	{% include 'Joke/sources.html.twig' %}
 {% endblock %}

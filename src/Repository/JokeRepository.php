@@ -1,7 +1,7 @@
 <?php namespace App\Repository;
 
 use App\Entity\Joke;
-use App\Entity\JokeLabel;
+use App\Entity\JokeTheme;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 

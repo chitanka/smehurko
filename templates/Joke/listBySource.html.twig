@@ -1,6 +1,9 @@
 {% extends 'base.html.twig' %}
 {% block content %}
-	<h1>{{ source.name }}</h1>
+	<h1>
+		{{ source.name }}
+		<a href="{{ source.url }}" target="_blank" title="Връзка към източника на смешките"><span class="fas fa-book"></span></a>
+	</h1>
 	{% include 'Joke/jokes.html.twig' %}
 	{% include 'pager.html.twig' %}
 {% endblock %}

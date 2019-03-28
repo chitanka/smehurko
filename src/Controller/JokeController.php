@@ -1,7 +1,7 @@
 <?php namespace App\Controller;
 
 use App\Entity\Joke;
-use App\Entity\JokeLabel;
+use App\Entity\JokeTheme;
 use App\Entity\JokeSource;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,10 +15,10 @@ class JokeController extends Controller {
 	 * @Route("/")
 	 */
 	public function index() {
-		$labels = $this->getDoctrine()->getRepository(JokeLabel::class)->findAll();
+		$themes = $this->getDoctrine()->getRepository(JokeTheme::class)->findAll();
 		$sources = $this->getDoctrine()->getRepository(JokeSource::class)->findAll();
 		return $this->render('Joke/index.html.twig', [
-			'labels' => $labels,
+			'themes' => $themes,
 			'sources' => $sources,
 		]);
 	}
@@ -39,11 +39,11 @@ class JokeController extends Controller {
 	}
 
 	/**
-	 * @Route("/labels")
+	 * @Route("/themes")
 	 */
-	public function indexLabels() {
-		$labels = $this->getDoctrine()->getRepository(JokeLabel::class)->findAll();
-		return $this->render('Joke/indexLabels.html.twig', ['labels' => $labels]);
+	public function indexThemes() {
+		$themes = $this->getDoctrine()->getRepository(JokeTheme::class)->findAll();
+		return $this->render('Joke/indexThemes.html.twig', ['themes' => $themes]);
 	}
 
 	/**
@@ -65,9 +65,9 @@ class JokeController extends Controller {
 	/**
 	 * @Route("/{slug}")
 	 */
-	public function listByLabel(Request $request, JokeLabel $label) {
-		$pager = $this->pager($request, $label->getJokes());
-		return $this->render('Joke/listByLabel.html.twig', ['label' => $label, 'pager' => $pager]);
+	public function listByTheme(Request $request, JokeTheme $theme) {
+		$pager = $this->pager($request, $theme->getJokes());
+		return $this->render('Joke/listByTheme.html.twig', ['theme' => $theme, 'pager' => $pager]);
 	}
 
 }

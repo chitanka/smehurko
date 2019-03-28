@@ -37,9 +37,9 @@ class Joke {
 	private $source;
 
 	/**
-	 * @ORM\ManyToMany(targetEntity="App\Entity\JokeLabel", inversedBy="jokes")
+	 * @ORM\ManyToMany(targetEntity="JokeTheme", inversedBy="jokes")
 	 */
-	private $labels;
+	private $themes;
 
 	/**
 	 * @ORM\Column(type="datetime")
@@ -57,7 +57,7 @@ class Joke {
 	private $randomKey;
 
 	public function __construct() {
-		$this->labels = new ArrayCollection();
+		$this->themes = new ArrayCollection();
 	}
 
 	public function getId(): int {
@@ -97,21 +97,21 @@ class Joke {
 	}
 
 	/**
-	 * @return Collection|JokeLabel[]
+	 * @return Collection|JokeTheme[]
 	 */
-	public function getLabels(): Collection {
-		return $this->labels;
+	public function getThemes(): Collection {
+		return $this->themes;
 	}
 
-	public function addLabel(JokeLabel $label) {
-		if (!$this->labels->contains($label)) {
-			$this->labels[] = $label;
+	public function addTheme(JokeTheme $theme) {
+		if (!$this->themes->contains($theme)) {
+			$this->themes[] = $theme;
 		}
 	}
 
-	public function removeLabel(JokeLabel $label) {
-		if ($this->labels->contains($label)) {
-			$this->labels->removeElement($label);
+	public function removeTheme(JokeTheme $theme) {
+		if ($this->themes->contains($theme)) {
+			$this->themes->removeElement($theme);
 		}
 	}
 
