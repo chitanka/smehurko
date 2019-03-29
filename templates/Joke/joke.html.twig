@@ -1,7 +1,7 @@
 <article class="card joke">
-	<div class="card-body">
+	<div class="card-body joke-body">
 		{% if joke.title %}
-			<h5 class="card-title">{{ joke.title }}</h5>
+			<h5 class="card-title joke-title">{{ joke.title }}</h5>
 			{% if joke.subtitle %}
 				<h6 class="card-subtitle mb-2 text-muted">{{ joke.subtitle }}</h6>
 			{% endif %}

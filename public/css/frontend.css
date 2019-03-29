@@ -4,9 +4,44 @@
 .joke {
 	margin-bottom: 1.67em;
 }
+.joke-title {
+	font-size: 1.35rem;
+	margin-bottom: 1rem;
+	border-bottom: 1px solid rgba(0,0,0,.125);
+}
 .joke-text p {
 	margin-bottom: 0.3em;
+	font-size: 1.1rem;
 }
 .joke-links {
 	font-size: 90%;
+}
+.overall-footer {
+	margin-top: 10em;
+	padding: 3em 0;
+}
+
+/* copied from https://startbootstrap.com/previews/freelancer/ */
+hr.star {
+	max-width: 25rem;
+	padding: 0;
+	text-align: center;
+	border: none;
+	border-top: solid 0.25rem;
+	border-color: #6c757d;
+	margin-top: 2.5rem;
+	margin-bottom: 2.5rem;
+	margin-left: auto;
+	margin-right: auto;
+}
+hr.star:after {
+	position: relative;
+	top: -.8em;
+	display: inline-block;
+	padding: 0 0.25em;
+	content: '\f3a5';
+	font-family: "Font Awesome 5 Free";
+	font-weight: 900;
+	font-size: 2em;
+	background-color: #f8f9fa;
 }
