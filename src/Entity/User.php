@@ -1,5 +1,7 @@
 <?php namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -57,6 +59,12 @@ class User implements UserInterface {
 	 */
 	private $preferences;
 
+	/**
+	 * @ORM\OneToMany(targetEntity="App\Entity\JokeSubmission", mappedBy="creator")
+	 * @ORM\OrderBy({"createdAt" = "DESC"})
+	 */
+	private $jokeSubmissions;
+
 	public static function createAnonymousUser() {
 		return new static(null, null);
 	}
@@ -74,6 +82,7 @@ class User implements UserInterface {
 		$this->email = $email;
 		$this->roles = $roles;
 		$this->setLastLogin();
+		$this->jokeSubmissions = new ArrayCollection();
 	}
 
 	public function __toString() {
@@ -197,6 +206,13 @@ class User implements UserInterface {
 		return [
 			'username' => $this->getUsername(),
 		];
+	}
+
+	/**
+	 * @return Collection|JokeSubmission[]
+	 */
+	public function getJokeSubmissions(): Collection {
+		return $this->jokeSubmissions;
 	}
 
 }

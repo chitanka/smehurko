@@ -2,7 +2,8 @@
 	justify-content: center;
 }
 .joke {
-	margin-bottom: 1.67em;
+	margin: 0 auto 1.67em auto;
+	max-width: 55rem;
 }
 .joke-title {
 	font-size: 1.35rem;
@@ -10,11 +11,20 @@
 	border-bottom: 1px solid rgba(0,0,0,.125);
 }
 .joke-text p {
-	margin-bottom: 0.3em;
+	margin-bottom: 0.4rem;
 	font-size: 1.1rem;
+}
+.joke-text p:last-child {
+	margin-bottom: 0;
 }
 .joke-links {
 	font-size: 90%;
+}
+.status-approved {
+	color: green;
+}
+.status-waiting {
+	color: orange;
 }
 .overall-footer {
 	margin-top: 10em;

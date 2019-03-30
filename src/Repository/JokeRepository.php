@@ -1,7 +1,6 @@
 <?php namespace App\Repository;
 
 use App\Entity\Joke;
-use App\Entity\JokeTheme;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -20,6 +19,13 @@ class JokeRepository extends ServiceEntityRepository {
 		return $this->createQueryBuilder('j')
 			->orderBy('j.id', 'DESC')
 			->setMaxResults($maxResults ?? 10)
+			->getQuery();
+	}
+
+	public function findByKeyword(string $keyword) {
+		return $this->createQueryBuilder('j')
+			->where('j.content LIKE :keyword')->setParameter('keyword', "%$keyword%")
+			->orderBy('j.id', 'DESC')
 			->getQuery();
 	}
 

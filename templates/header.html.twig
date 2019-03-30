@@ -12,21 +12,28 @@
 				<li class="nav-item px-2">
 					<a class="nav-link" href="{{ path('app_joke_random') }}"><span class="fas fa-magic"></span> Случайна смешка</a>
 				</li>
-				{% if app.user.isRegistered %}
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<span class="fas fa-user-alt"></span> {{ app.user.username }}
-						</a>
-						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-							<a class="dropdown-item" href="#"><span class="fa fa-plus fa-fw"></span> Нова смешка</a>
-						</div>
-					</li>
-				{% else %}
-					<li class="nav-item">
-						<a href="//chitanka.info/login?returnto={{ url('home')|url_encode }}" class="nav-link"><span class="fas fa-sign-in-alt"></span> Вход</a>
-					</li>
-				{% endif %}
 			</ul>
+			<form class="form-inline mx-3 my-2 my-lg-0" action="{{ path('app_joke_index') }}">
+				<div class="input-group">
+					<input name="q" value="{{ searchQuery|default('') }}" class="form-control" type="search" placeholder="Смехурко..." aria-label="Търсене">
+					<div class="input-group-append">
+						<button class="btn btn-outline-secondary" type="submit"><span class="fas fa-search"></span><span class="sr-only">Търсене</span></button>
+					</div>
+				</div>
+			</form>
+			{% if app.user.isRegistered %}
+				<div class="navbar-nav nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<span class="fas fa-user-alt"></span> {{ app.user.username }}
+					</a>
+					<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+						<a href="{{ path('app_joke_newsubmission') }}" class="dropdown-item"><span class="fas fa-plus fa-fw"></span> Добавяне на смешка</a>
+						<a href="{{ path('app_joke_listsubmissions') }}" class="dropdown-item"><span class="fas fa-cubes fa-fw"></span> Предложени смешки</a>
+					</div>
+				</div>
+			{% else %}
+				<a href="//chitanka.info/login?returnto={{ url('home')|url_encode }}" class="nav-item nav-link"><span class="fas fa-sign-in-alt"></span> Вход</a>
+			{% endif %}
 		</div>
 	</nav>
 </header>

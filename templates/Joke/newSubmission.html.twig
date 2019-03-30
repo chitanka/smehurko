@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+{% block content %}
+	<h1>Добавяне на смешка</h1>
+	<style>
+		#joke_submission_content {
+			height: 25em;
+		}
+		#joke_submission_themes, #joke_submission_source {
+			height: 2em;
+		}
+	</style>
+	{{ form(form) }}
+{% endblock %}

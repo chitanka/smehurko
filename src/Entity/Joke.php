@@ -56,6 +56,11 @@ class Joke {
 	 */
 	private $randomKey;
 
+	/**
+	 * @ORM\OneToOne(targetEntity="App\Entity\JokeSubmission", mappedBy="joke", cascade={"persist", "remove"})
+	 */
+	private $jokeSubmission;
+
 	public function __construct() {
 		$this->themes = new ArrayCollection();
 	}
@@ -131,6 +136,10 @@ class Joke {
 		$this->updatedAt = $updatedAt;
 	}
 
+	public function getJokeSubmission(): ?JokeSubmission {
+		return $this->jokeSubmission;
+	}
+
 	/**
 	 * @ORM\PrePersist
 	 */
@@ -142,4 +151,5 @@ class Joke {
 	public static function generateRandomKey() {
 		return mt_rand() / mt_getrandmax();
 	}
+
 }

@@ -1,11 +1,15 @@
 <?php namespace App\Controller;
 
+use App\Entity\User;
 use Doctrine\Common\Collections\Collection;
 use Pagerfanta\Adapter\DoctrineCollectionAdapter;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @method User getUser()
+ */
 abstract class Controller extends \Symfony\Bundle\FrameworkBundle\Controller\AbstractController {
 
 	const PARAM_PAGER_PAGE = 'page';
