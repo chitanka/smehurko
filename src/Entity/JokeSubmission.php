@@ -61,7 +61,7 @@ class JokeSubmission {
 	}
 
 	public function getTitle(): ?string {
-		return $this->title ?: ($this->content ? mb_substr($this->content, 0, 60).'…' : null);
+		return $this->title ?: ($this->content ? mb_substr($this->content, 0, 50).'…' : null);
 	}
 
 	public function setTitle(string $title) {

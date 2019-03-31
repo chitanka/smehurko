@@ -19,14 +19,14 @@
 				</h5>
 			</header>
 			<div id="{{ textContainerId }}" class="collapse">
-				<div class="card-body pb-0 joke-body">
+				<div class="card-body joke-body">
 					<div class="card-text joke-text">
 						{{ jokeSubmission.content|format_content|raw }}
 					</div>
 				</div>
-				<footer class="card-footer">
-					{{ jokeSubmission.themes }} &bull;
-					{{ jokeSubmission.source }}
+				<footer class="card-footer text-muted">
+					{{ jokeSubmission.themes|default('Без теми') }} &bull;
+					{{ jokeSubmission.source|default('Без източник') }}
 				</footer>
 			</div>
 		</article>
