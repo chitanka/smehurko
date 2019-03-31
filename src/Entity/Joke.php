@@ -38,6 +38,7 @@ class Joke {
 
 	/**
 	 * @ORM\ManyToMany(targetEntity="JokeTheme", inversedBy="jokes")
+	 * @ORM\JoinTable(name="joke_themes")
 	 */
 	private $themes;
 
