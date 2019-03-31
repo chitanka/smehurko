@@ -29,6 +29,7 @@ class JokeSubmission {
 	/**
 	 * @ORM\ManyToMany(targetEntity="JokeTheme", inversedBy="jokeSubmissions")
 	 * @ORM\JoinTable(name="joke_submission_themes")
+	 * @ORM\OrderBy({"name" = "ASC"})
 	 */
 	private $themes;
 
