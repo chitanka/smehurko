@@ -22,6 +22,9 @@
 .joke-text p:last-child {
 	margin-bottom: 0;
 }
+.joke-text p:empty {
+	height: 0.5rem;
+}
 .joke-links {
 	font-size: 90%;
 }
