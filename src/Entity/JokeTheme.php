@@ -35,8 +35,22 @@ class JokeTheme {
 	 */
 	private $nrOfJokes;
 
+	/**
+	 * @ORM\ManyToMany(targetEntity="App\Entity\JokeSubmission", mappedBy="themes")
+	 */
+	private $jokeSubmissions;
+
+	/**
+	 * @ORM\Column(type="integer")
+	 */
+	private $nrOfJokeSubmissions;
+
 	public function __construct() {
 		$this->jokes = new ArrayCollection();
+	}
+
+	public function __toString() {
+		return $this->name;
 	}
 
 	public function getId(): ?int {
@@ -72,6 +86,21 @@ class JokeTheme {
 
 	public function setNrOfJokes(int $nrOfJokes) {
 		$this->nrOfJokes = $nrOfJokes;
+	}
+
+	/**
+	 * @return Collection|JokeSubmission[]
+	 */
+	public function getJokeSubmissions(): Collection {
+		return $this->jokeSubmissions;
+	}
+
+	public function getNrOfJokeSubmissions(): ?int {
+		return $this->nrOfJokeSubmissions;
+	}
+
+	public function setNrOfJokeSubmissions(int $nrOfJokeSubmissions) {
+		$this->nrOfJokeSubmissions = $nrOfJokeSubmissions;
 	}
 
 }

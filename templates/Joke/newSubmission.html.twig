@@ -5,9 +5,14 @@
 		#joke_submission_content {
 			height: 20em;
 		}
-		#joke_submission_themes, #joke_submission_source {
+		#joke_submission_source {
 			height: 2em;
 		}
 	</style>
 	{{ form(form) }}
+{% endblock %}
+{% block custom_javascripts %}
+<script>
+	$('#joke_submission_themes').select2();
+</script>
 {% endblock %}

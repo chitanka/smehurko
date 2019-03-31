@@ -1,5 +1,7 @@
 <?php namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,7 +27,8 @@ class JokeSubmission {
 	private $content;
 
 	/**
-	 * @ORM\Column(type="text", nullable=true)
+	 * @ORM\ManyToMany(targetEntity="JokeTheme", inversedBy="jokeSubmissions")
+	 * @ORM\JoinTable(name="joke_submission_themes")
 	 */
 	private $themes;
 
@@ -56,6 +59,10 @@ class JokeSubmission {
 		return $self;
 	}
 
+	public function __construct() {
+		$this->themes = new ArrayCollection();
+	}
+
 	public function getId(): ?int {
 		return $this->id;
 	}
@@ -76,12 +83,23 @@ class JokeSubmission {
 		$this->content = $content;
 	}
 
-	public function getThemes(): ?string {
+	/**
+	 * @return Collection|JokeTheme[]
+	 */
+	public function getThemes(): Collection {
 		return $this->themes;
 	}
 
-	public function setThemes(?string $themes) {
-		$this->themes = $themes;
+	public function addTheme(JokeTheme $theme) {
+		if (!$this->themes->contains($theme)) {
+			$this->themes[] = $theme;
+		}
+	}
+
+	public function removeTheme(JokeTheme $theme) {
+		if ($this->themes->contains($theme)) {
+			$this->themes->removeElement($theme);
+		}
 	}
 
 	public function getSource(): ?string {

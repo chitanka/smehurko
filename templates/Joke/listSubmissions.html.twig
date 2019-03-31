@@ -25,8 +25,12 @@
 					</div>
 				</div>
 				<footer class="card-footer text-muted">
-					{{ jokeSubmission.themes|default('Без теми') }} &bull;
-					{{ jokeSubmission.source|default('Без източник') }}
+					{% for theme in jokeSubmission.themes %}
+						<a href="{{ path('app_joke_listbytheme', {slug: theme.slug}) }}" class="card-link text-muted"><span class="fas fa-tag"></span> {{ theme.name }}</a>
+					{% endfor %}
+					{% if jokeSubmission.source is not empty %}
+						<span class="card-link">{{ jokeSubmission.source }}</span>
+					{% endif %}
 				</footer>
 			</div>
 		</article>
