@@ -57,7 +57,7 @@ class Joke {
 	private $randomKey;
 
 	/**
-	 * @ORM\OneToOne(targetEntity="App\Entity\JokeSubmission", mappedBy="joke", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="App\Entity\JokeSubmission", inversedBy="joke", cascade={"persist", "remove"})
 	 */
 	private $jokeSubmission;
 

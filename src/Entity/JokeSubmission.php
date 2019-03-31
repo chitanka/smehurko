@@ -46,7 +46,7 @@ class JokeSubmission {
 	private $creator;
 
 	/**
-	 * @ORM\OneToOne(targetEntity="App\Entity\Joke", inversedBy="jokeSubmission", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="App\Entity\Joke", mappedBy="jokeSubmission", cascade={"persist", "remove"})
 	 */
 	private $joke;
 
