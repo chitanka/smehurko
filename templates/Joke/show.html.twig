@@ -1,4 +1,8 @@
 {% extends 'base.html.twig' %}
 {% block content %}
 	{% include 'Joke/joke.html.twig' %}
+	{% if joke.hasSimilarJokes %}
+		<h2 class="joke-list-heading">Подобни</h2>
+		{% include 'Joke/jokes.html.twig' with {jokes: joke.similarJokes} %}
+	{% endif %}
 {% endblock %}

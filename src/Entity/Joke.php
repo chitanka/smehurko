@@ -61,8 +61,20 @@ class Joke {
 	 */
 	private $jokeSubmission;
 
+	/**
+	 * @ORM\ManyToMany(targetEntity="App\Entity\Joke")
+	 * @ORM\JoinTable(name="similar_jokes")
+	 */
+	private $similarJokes;
+
+	/**
+	 * @ORM\Column(type="integer")
+	 */
+	private $nrOfSimilarJokes = 0;
+
 	public function __construct() {
 		$this->themes = new ArrayCollection();
+		$this->similarJokes = new ArrayCollection();
 	}
 
 	public function getId(): int {
@@ -152,4 +164,34 @@ class Joke {
 		return mt_rand() / mt_getrandmax();
 	}
 
+	/**
+	 * @return Collection|self[]
+	 */
+	public function getSimilarJokes(): Collection {
+		return $this->similarJokes;
+	}
+
+	public function addSimilarJoke(self $similarJoke) {
+		if (!$this->similarJokes->contains($similarJoke)) {
+			$this->similarJokes[] = $similarJoke;
+		}
+	}
+
+	public function removeSimilarJoke(self $similarJoke) {
+		if ($this->similarJokes->contains($similarJoke)) {
+			$this->similarJokes->removeElement($similarJoke);
+		}
+	}
+
+	public function getNrOfSimilarJokes(): ?int {
+		return $this->nrOfSimilarJokes;
+	}
+
+	public function setNrOfSimilarJokes(int $nrOfSimilarJokes) {
+		$this->nrOfSimilarJokes = $nrOfSimilarJokes;
+	}
+
+	public function hasSimilarJokes(): bool {
+		return $this->nrOfSimilarJokes > 0;
+	}
 }
