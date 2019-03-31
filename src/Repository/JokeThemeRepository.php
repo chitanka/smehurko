@@ -17,6 +17,7 @@ class JokeThemeRepository extends ServiceEntityRepository {
     /** @return JokeTheme[] */
 	public function findAll() {
 		return $this->createQueryBuilder('e')
+			->where('e.nrOfJokes > 0')
 			->orderBy('e.name', 'ASC')
 			->getQuery()->getResult();
 	}
