@@ -8,6 +8,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="`user`")
+ * @ORM\HasLifecycleCallbacks()
  */
 class User implements UserInterface {
 
@@ -65,6 +66,11 @@ class User implements UserInterface {
 	 */
 	private $jokeSubmissions;
 
+	/**
+	 * @ORM\Column(type="datetime")
+	 */
+	private $registeredAt;
+
 	public static function createAnonymousUser() {
 		return new static(null, null);
 	}
@@ -72,7 +78,7 @@ class User implements UserInterface {
 	public static function normalizeRoleName($roleInput) {
 		$role = strtoupper($roleInput);
 		if (strpos($role, self::ROLE_PREFIX) === false) {
-			$role = self::ROLE_PREFIX.$role;
+			$role = self::ROLE_PREFIX . $role;
 		}
 		return $role;
 	}
@@ -86,7 +92,7 @@ class User implements UserInterface {
 	}
 
 	public function __toString() {
-		return (string) $this->getUsername();
+		return (string)$this->getUsername();
 	}
 
 	public function isAnonymous() {
@@ -200,7 +206,8 @@ class User implements UserInterface {
 		return null;
 	}
 
-	public function eraseCredentials() {}
+	public function eraseCredentials() {
+	}
 
 	public function toArray() {
 		return [
@@ -213,6 +220,21 @@ class User implements UserInterface {
 	 */
 	public function getJokeSubmissions(): Collection {
 		return $this->jokeSubmissions;
+	}
+
+	public function getRegisteredAt(): ?\DateTimeInterface {
+		return $this->registeredAt;
+	}
+
+	public function setRegisteredAt(\DateTimeInterface $registeredAt) {
+		$this->registeredAt = $registeredAt;
+	}
+
+	/**
+	 * @ORM\PrePersist
+	 */
+	public function onCreation() {
+		$this->registeredAt = new \DateTime();
 	}
 
 }
