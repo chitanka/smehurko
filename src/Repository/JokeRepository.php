@@ -2,7 +2,6 @@
 
 use App\Entity\Joke;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * @method Joke|null find($id, $lockMode = null, $lockVersion = null)
@@ -11,7 +10,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method Joke[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class JokeRepository extends ServiceEntityRepository {
-	public function __construct(RegistryInterface $registry) {
+	public function __construct(\Doctrine\Common\Persistence\ManagerRegistry $registry) {
 		parent::__construct($registry, Joke::class);
 	}
 

@@ -21,7 +21,7 @@ class KernelListener implements EventSubscriberInterface {
 	private $singleLoginProvider;
 	private $twig;
 
-	public function __construct(UserRepository $userRepo, TokenStorageInterface $tokenStorage, $singleLoginProvider, \Twig_Environment $twig) {
+	public function __construct(UserRepository $userRepo, TokenStorageInterface $tokenStorage, $singleLoginProvider, \Twig\Environment $twig) {
 		$this->userRepo = $userRepo;
 		$this->tokenStorage = $tokenStorage;
 		$this->singleLoginProvider = $singleLoginProvider;
