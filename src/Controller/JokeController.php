@@ -36,10 +36,13 @@ class JokeController extends Controller {
 	}
 
 	/**
-	 * @Route("/random")
+	 * @Route("/random.{_format}")
 	 */
-	public function random() {
+	public function random(string $_format = 'html') {
 		$jokes = $this->getDoctrine()->getRepository(Joke::class)->findRandom();
+		if ($_format === 'txt' && count($jokes) > 0) {
+			return $this->render('Joke/show.txt.twig', ['joke' => $jokes[0]]);
+		}
 		return $this->render('Main/index.html.twig', ['jokes' => $jokes]);
 	}
 
