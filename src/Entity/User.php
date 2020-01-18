@@ -61,10 +61,28 @@ class User implements UserInterface {
 	private $preferences;
 
 	/**
+	 * @ORM\OneToMany(targetEntity="App\Entity\Joke", mappedBy="creator")
+	 * @ORM\OrderBy({"createdAt" = "DESC"})
+	 */
+	private $jokes;
+
+	/**
 	 * @ORM\OneToMany(targetEntity="App\Entity\JokeSubmission", mappedBy="creator")
 	 * @ORM\OrderBy({"createdAt" = "DESC"})
 	 */
 	private $jokeSubmissions;
+
+	/**
+	 * @ORM\OneToMany(targetEntity="App\Entity\JokeSubmission", mappedBy="approver")
+	 * @ORM\OrderBy({"createdAt" = "DESC"})
+	 */
+	private $approvedJokeSubmissions;
+
+	/**
+	 * @ORM\OneToMany(targetEntity="App\Entity\JokeSubmission", mappedBy="rejecter")
+	 * @ORM\OrderBy({"createdAt" = "DESC"})
+	 */
+	private $rejectedJokeSubmissions;
 
 	/**
 	 * @ORM\Column(type="datetime")
@@ -215,11 +233,24 @@ class User implements UserInterface {
 		];
 	}
 
-	/**
-	 * @return Collection|JokeSubmission[]
-	 */
+	/** @return Collection|Joke[] */
+	public function getJokes(): Collection {
+		return $this->jokes;
+	}
+
+	/** @return Collection|JokeSubmission[] */
 	public function getJokeSubmissions(): Collection {
 		return $this->jokeSubmissions;
+	}
+
+	/** @return Collection|JokeSubmission[] */
+	public function getApprovedJokeSubmissions(): Collection {
+		return $this->approvedJokeSubmissions;
+	}
+
+	/** @return Collection|JokeSubmission[] */
+	public function getRejectedJokeSubmissions(): Collection {
+		return $this->rejectedJokeSubmissions;
 	}
 
 	public function getRegisteredAt(): ?\DateTimeInterface {
@@ -237,4 +268,7 @@ class User implements UserInterface {
 		$this->registeredAt = new \DateTime();
 	}
 
+	public function canApproveSubmissions(): bool {
+		return $this->is(self::ROLE_EDITOR);
+	}
 }

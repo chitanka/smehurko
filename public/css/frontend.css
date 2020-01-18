@@ -34,6 +34,9 @@
 .status-waiting {
 	color: orange;
 }
+.status-rejected {
+	color: red;
+}
 .overall-footer {
 	margin-top: 10em;
 	padding: 3em 0;

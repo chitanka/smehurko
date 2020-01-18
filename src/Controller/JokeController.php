@@ -87,6 +87,15 @@ class JokeController extends Controller {
 	}
 
 	/**
+	 * Show submissions which are pending for approval
+	 * @Route("/pending-submissions")
+	 */
+	public function listPendingSubmissions(Request $request) {
+		$pager = $this->pager($request, $this->getDoctrine()->getRepository(JokeSubmission::class)->findPending());
+		return $this->render('Joke/listSubmissions.html.twig', ['pager' => $pager]);
+	}
+
+	/**
 	 * @Route("/{slug}")
 	 */
 	public function listByTheme(Request $request, JokeTheme $theme) {
@@ -112,4 +121,24 @@ class JokeController extends Controller {
 			'form' => $form->createView(),
 		]);
 	}
+
+	/**
+	 * @Route("/submissions/{id<\d+>}/approve", methods={"POST"})
+	 */
+	public function approveSubmission(JokeSubmission $jokeSubmission) {
+		$joke = Joke::newFromSubmission($jokeSubmission);
+		$jokeSubmission->approve($this->getUser(), $joke);
+		$this->storeEntities($joke, $jokeSubmission);
+		return $this->redirectToRoute('app_joke_listpendingsubmissions');
+	}
+
+	/**
+	 * @Route("/submissions/{id<\d+>}/reject", methods={"POST"})
+	 */
+	public function rejectSubmission(JokeSubmission $jokeSubmission) {
+		$jokeSubmission->reject($this->getUser());
+		$this->storeEntities($jokeSubmission);
+		return $this->redirectToRoute('app_joke_listpendingsubmissions');
+	}
+
 }

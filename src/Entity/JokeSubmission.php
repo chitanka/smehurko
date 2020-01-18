@@ -50,6 +50,26 @@ class JokeSubmission {
 	private $creator;
 
 	/**
+	 * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="approvedJokeSubmissions")
+	 */
+	private $approver;
+
+	/**
+	 * @ORM\Column(type="datetime", nullable=true)
+	 */
+	private $approvedAt;
+
+	/**
+	 * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="rejectedJokeSubmissions")
+	 */
+	private $rejecter;
+
+	/**
+	 * @ORM\Column(type="datetime", nullable=true)
+	 */
+	private $rejectedAt;
+
+	/**
 	 * @ORM\OneToOne(targetEntity="App\Entity\Joke", mappedBy="jokeSubmission", cascade={"persist", "remove"})
 	 */
 	private $joke;
@@ -69,7 +89,11 @@ class JokeSubmission {
 	}
 
 	public function getTitle(): ?string {
-		return $this->title ?: ($this->content ? mb_substr($this->content, 0, 50).'…' : null);
+		return $this->title;
+	}
+
+	public function getTitleOrDefault(): ?string {
+		return $this->title ?: mb_substr($this->content, 0, 60).'…';
 	}
 
 	public function setTitle(string $title) {
@@ -127,16 +151,39 @@ class JokeSubmission {
 		$this->creator = $creator;
 	}
 
+	public function getApprovedAt(): ?\DateTimeInterface {
+		return $this->approvedAt;
+	}
+
+	public function getRejectedAt(): ?\DateTimeInterface {
+		return $this->rejectedAt;
+	}
+
 	public function getJoke(): ?Joke {
 		return $this->joke;
 	}
 
-	public function setJoke(?Joke $joke) {
+	public function approve(User $approver, Joke $joke) {
+		$this->approver = $approver;
+		$this->approvedAt = new \DateTime();
 		$this->joke = $joke;
+		$this->rejecter = null;
+		$this->rejectedAt = null;
 	}
 
-	public function isApproved() {
-		return $this->joke !== null;
+	public function reject(User $rejecter) {
+		$this->rejecter = $rejecter;
+		$this->rejectedAt = new \DateTime();
+		$this->approver = null;
+		$this->approvedAt = null;
+	}
+
+	public function isApproved(): bool {
+		return $this->approvedAt !== null;
+	}
+
+	public function isRejected(): bool {
+		return $this->rejectedAt !== null;
 	}
 
 	/**

@@ -16,5 +16,9 @@
 		{% if joke.source %}
 			<a href="{{ path('app_joke_listbysource', {slug: joke.source.slug}) }}" class="card-link text-muted" title="Източник"><span class="fas fa-book"></span> {{ joke.source.name }}</a>
 		{% endif %}
+		{% if joke.creator %}
+			<span class="card-link text-muted" title="Добавена от"><span class="fa fa-user"></span> {{ joke.creator }}</span>
+		{% endif %}
+		<time class="small text-muted float-right" datetime="{{ joke.createdAt|date('Y-m-d H:i:s') }}" title="Добавена на"><span class="far fa-clock"></span> {{ joke.createdAt|date('d.m.Y H:i') }}</time>
 	</footer>
 </article>

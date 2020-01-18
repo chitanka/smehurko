@@ -3,37 +3,7 @@
 
 	<h1 class="text-center">Предложени смешки</h1>
 	{% for jokeSubmission in pager.currentPageResults %}
-		{% set textContainerId = 'jokeSubmission-' ~ jokeSubmission.id ~ '-text' %}
-		<article class="card joke">
-			<header class="card-header pb-0">
-				<h5 class="card-title d-flex justify-content-between align-items-center" data-toggle="collapse" data-target="#{{ textContainerId }}" aria-expanded="false" aria-controls="{{ textContainerId }}" style="cursor: pointer">
-					<span>
-					{% if jokeSubmission.approved %}
-						<span class="fas fa-check status-approved" title="Одобрена"></span>
-					{% else %}
-						<span class="far fa-circle status-waiting" title="Очаква одобрение"></span>
-					{% endif %}
-					{{ jokeSubmission.title }}
-					</span>
-					<time class="small text-muted" datetime="{{ jokeSubmission.createdAt|date('Y-m-d H:i:s') }}"><span class="far fa-clock"></span> {{ jokeSubmission.createdAt|date('d.m.Y H:i') }}</time>
-				</h5>
-			</header>
-			<div id="{{ textContainerId }}" class="collapse">
-				<div class="card-body joke-body">
-					<div class="card-text joke-text">
-						{{ jokeSubmission.content|format_content|raw }}
-					</div>
-				</div>
-				<footer class="card-footer text-muted">
-					{% for theme in jokeSubmission.themes %}
-						<a href="{{ path('app_joke_listbytheme', {slug: theme.slug}) }}" class="card-link text-muted"><span class="fas fa-tag"></span> {{ theme.name }}</a>
-					{% endfor %}
-					{% if jokeSubmission.source is not empty %}
-						<span class="card-link">{{ jokeSubmission.source }}</span>
-					{% endif %}
-				</footer>
-			</div>
-		</article>
+		{% include 'Joke/jokeSubmission.html.twig' %}
 	{% endfor %}
 
 	{% include 'pager.html.twig' %}

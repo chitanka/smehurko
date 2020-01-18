@@ -17,7 +17,7 @@ class Joke {
 	private $id;
 
 	/**
-	 * @ORM\Column(type="string", length=255)
+	 * @ORM\Column(type="string", length=255, nullable=true)
 	 */
 	private $title;
 
@@ -47,6 +47,11 @@ class Joke {
 	 * @ORM\Column(type="datetime")
 	 */
 	private $createdAt;
+
+	/**
+	 * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="jokes")
+	 */
+	private $creator;
 
 	/**
 	 * @ORM\Column(type="datetime", nullable=true)
@@ -79,15 +84,25 @@ class Joke {
 		$this->similarJokes = new ArrayCollection();
 	}
 
+	public static function newFromSubmission(JokeSubmission $jokeSubmission) {
+		$joke = new static();
+		$joke->setTitle($jokeSubmission->getTitle());
+		$joke->setContent($jokeSubmission->getContent());
+		$joke->setCreator($jokeSubmission->getCreator());
+		$joke->themes = $jokeSubmission->getThemes();
+		$joke->jokeSubmission = $jokeSubmission;
+		return $joke;
+	}
+
 	public function getId(): int {
 		return $this->id;
 	}
 
-	public function getTitle(): string {
+	public function getTitle(): ?string {
 		return $this->title;
 	}
 
-	public function setTitle(string $title) {
+	public function setTitle(?string $title) {
 		$this->title = $title;
 	}
 
@@ -140,6 +155,14 @@ class Joke {
 
 	public function setCreatedAt(\DateTimeInterface $createdAt) {
 		$this->createdAt = $createdAt;
+	}
+
+	public function getCreator(): ?User {
+		return $this->creator;
+	}
+
+	public function setCreator(?User $creator) {
+		$this->creator = $creator;
 	}
 
 	public function getUpdatedAt(): ?\DateTimeInterface {

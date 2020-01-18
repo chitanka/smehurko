@@ -32,4 +32,12 @@ abstract class Controller extends \Symfony\Bundle\FrameworkBundle\Controller\Abs
 		$pager->setCurrentPage($request->query->get(self::PARAM_PAGER_PAGE, 1));
 		return $pager;
 	}
+
+	protected function storeEntities(...$entities) {
+		$entityManager = $this->getDoctrine()->getManager();
+		foreach ($entities as $entity) {
+			$entityManager->persist($entity);
+		}
+		$entityManager->flush();
+	}
 }

@@ -1,0 +1,49 @@
+{% set textContainerId = 'jokeSubmission-' ~ jokeSubmission.id ~ '-text' %}
+<article class="card joke">
+	<header class="card-header pb-0">
+		<h5 class="card-title d-flex justify-content-between align-items-center" data-toggle="collapse" data-target="#{{ textContainerId }}" aria-expanded="false" aria-controls="{{ textContainerId }}" style="cursor: pointer">
+			<span>
+			{% if jokeSubmission.approved %}
+				<span class="fas fa-check status-approved" title="Одобрена"></span>
+			{% elseif jokeSubmission.rejected %}
+				<span class="fas fa-times status-rejected" title="Отхвърлена"></span>
+			{% else %}
+				<span class="far fa-circle status-waiting" title="Очаква одобрение"></span>
+			{% endif %}
+			{{ jokeSubmission.titleOrDefault }}
+			</span>
+			<time class="small text-muted" datetime="{{ jokeSubmission.createdAt|date('Y-m-d H:i:s') }}"><span class="far fa-clock"></span> {{ jokeSubmission.createdAt|date('d.m.Y H:i') }}</time>
+		</h5>
+	</header>
+	<div id="{{ textContainerId }}" class="collapse">
+		<div class="card-body joke-body">
+			<div class="card-text joke-text">
+				{{ jokeSubmission.content|format_content|raw }}
+			</div>
+		</div>
+		<footer class="card-footer text-muted">
+			{% for theme in jokeSubmission.themes %}
+				<a href="{{ path('app_joke_listbytheme', {slug: theme.slug}) }}" class="card-link text-muted"><span class="fas fa-tag"></span> {{ theme.name }}</a>
+			{% endfor %}
+			{% if jokeSubmission.source is not empty %}
+				<span class="card-link">{{ jokeSubmission.source }}</span>
+			{% endif %}
+			<span class="card-link text-muted" title="Добавена от"><span class="fa fa-user"></span> {{ jokeSubmission.creator }}</span>
+
+			{% if app.user.canApproveSubmissions() %}
+				<div class="float-right">
+					{% if not jokeSubmission.approved %}
+						<form method="post" action="{{ path('app_joke_approvesubmission', {id: jokeSubmission.id}) }}" style="display: inline">
+							<button type="submit" class="btn btn-sm btn-success"><span class="fa fa-check"></span> Одобряване</button>
+						</form>
+					{% endif %}
+					{% if not jokeSubmission.rejected %}
+						<form method="post" action="{{ path('app_joke_rejectsubmission', {id: jokeSubmission.id}) }}" style="display: inline">
+							<button type="submit" class="btn btn-sm btn-danger"><span class="fa fa-times"></span> Отхвърляне</button>
+						</form>
+					{% endif %}
+				</div>
+			{% endif %}
+		</footer>
+	</div>
+</article>
