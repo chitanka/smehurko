@@ -89,7 +89,9 @@ class Joke {
 		$joke->setTitle($jokeSubmission->getTitle());
 		$joke->setContent($jokeSubmission->getContent());
 		$joke->setCreator($jokeSubmission->getCreator());
-		$joke->themes = $jokeSubmission->getThemes();
+		foreach ($jokeSubmission->getThemes() as $theme) {
+			$joke->addTheme($theme);
+		}
 		$joke->jokeSubmission = $jokeSubmission;
 		return $joke;
 	}
@@ -140,6 +142,7 @@ class Joke {
 	public function addTheme(JokeTheme $theme) {
 		if (!$this->themes->contains($theme)) {
 			$this->themes[] = $theme;
+			$theme->incrementNrOfJokes();
 		}
 	}
 

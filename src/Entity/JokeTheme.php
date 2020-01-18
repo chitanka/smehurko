@@ -33,7 +33,7 @@ class JokeTheme {
 	/**
 	 * @ORM\Column(type="integer")
 	 */
-	private $nrOfJokes;
+	private $nrOfJokes = 0;
 
 	/**
 	 * @ORM\ManyToMany(targetEntity="App\Entity\JokeSubmission", mappedBy="themes")
@@ -86,6 +86,10 @@ class JokeTheme {
 
 	public function setNrOfJokes(int $nrOfJokes) {
 		$this->nrOfJokes = $nrOfJokes;
+	}
+
+	public function incrementNrOfJokes() {
+		$this->nrOfJokes++;
 	}
 
 	/**
