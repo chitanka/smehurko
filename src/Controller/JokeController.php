@@ -40,10 +40,7 @@ class JokeController extends Controller {
 	 */
 	public function random(string $_format = 'html') {
 		$jokes = $this->getDoctrine()->getRepository(Joke::class)->findRandom();
-		if (in_array($_format, ['txt', 'md']) && count($jokes) > 0) {
-			return $this->render('Joke/show.txt.twig', ['joke' => $jokes[0]]);
-		}
-		return $this->render('Main/index.html.twig', ['jokes' => $jokes]);
+		return $this->renderRandomJokes($jokes, $_format);
 	}
 
 	/**
@@ -96,6 +93,14 @@ class JokeController extends Controller {
 	}
 
 	/**
+	 * @Route("/{slug}/random.{_format}")
+	 */
+	public function randomByTheme(JokeTheme $theme, string $_format = 'html') {
+		$jokes = $this->getDoctrine()->getRepository(Joke::class)->findRandomByTheme($theme);
+		return $this->renderRandomJokes($jokes, $_format);
+	}
+
+	/**
 	 * @Route("/{slug}")
 	 */
 	public function listByTheme(Request $request, JokeTheme $theme) {
@@ -141,4 +146,10 @@ class JokeController extends Controller {
 		return $this->redirectToRoute('app_joke_listpendingsubmissions');
 	}
 
+	private function renderRandomJokes($jokes, $format) {
+		if (in_array($format, ['txt', 'md']) && count($jokes) > 0) {
+			return $this->render('Joke/show.txt.twig', ['joke' => $jokes[0]]);
+		}
+		return $this->render('Main/index.html.twig', ['jokes' => $jokes]);
+	}
 }

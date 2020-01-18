@@ -1,6 +1,7 @@
 <?php namespace App\Repository;
 
 use App\Entity\Joke;
+use App\Entity\JokeTheme;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
@@ -34,6 +35,18 @@ class JokeRepository extends ServiceEntityRepository {
 	public function findRandom($maxResults = null) {
 		return $this->createQueryBuilder('j')
 			->where('j.randomKey < ?1')->setParameter(1, Joke::generateRandomKey())
+			->orderBy('j.randomKey', 'DESC')
+			->setMaxResults($maxResults ?? 1)
+			->getQuery()->getResult();
+	}
+
+	/**
+	 * @return Joke[]
+	 */
+	public function findRandomByTheme(JokeTheme $theme, ?int $maxResults = null) {
+		return $this->createQueryBuilder('j')
+			->where('j.randomKey < ?1')->setParameter(1, Joke::generateRandomKey())
+			->andWhere(':theme MEMBER OF j.themes')->setParameter('theme', $theme)
 			->orderBy('j.randomKey', 'DESC')
 			->setMaxResults($maxResults ?? 1)
 			->getQuery()->getResult();
