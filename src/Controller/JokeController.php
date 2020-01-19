@@ -134,6 +134,7 @@ class JokeController extends Controller {
 		$joke = Joke::newFromSubmission($jokeSubmission);
 		$jokeSubmission->approve($this->getUser(), $joke);
 		$this->storeEntities($joke, $jokeSubmission);
+		$this->addFlash('success', "Одобрена: $jokeSubmission");
 		return $this->redirectToRoute('app_joke_listpendingsubmissions');
 	}
 
@@ -143,6 +144,7 @@ class JokeController extends Controller {
 	public function rejectSubmission(JokeSubmission $jokeSubmission) {
 		$jokeSubmission->reject($this->getUser());
 		$this->storeEntities($jokeSubmission);
+		$this->addFlash('success', "Отхвърлена: $jokeSubmission");
 		return $this->redirectToRoute('app_joke_listpendingsubmissions');
 	}
 

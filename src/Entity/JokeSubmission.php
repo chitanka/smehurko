@@ -84,6 +84,10 @@ class JokeSubmission {
 		$this->themes = new ArrayCollection();
 	}
 
+	public function __toString() {
+		return $this->getTitleOrDefault();
+	}
+
 	public function getId(): ?int {
 		return $this->id;
 	}

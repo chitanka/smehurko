@@ -27,6 +27,7 @@
 		{% include 'header.html.twig' %}
 	{% endblock %}
 	<main role="main" class="container px-0">
+		{% block flashes %}{% include 'flashes.html.twig' %}{% endblock %}
 		{% block content '' %}
 	</main>
 	{% block footer %}
