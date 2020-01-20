@@ -10,6 +10,9 @@
 	</div>
 	<footer class="card-footer joke-links">
 		<a href="{{ path('app_joke_show', {id: joke.id}) }}" class="card-link text-muted" title="Пряка връзка към смешката"><span class="fas fa-link"></span></a>
+		{% if app.user.canEditJokes() %}
+			<a href="{{ path('app_joke_edit', {id: joke.id}) }}" class="card-link text-muted" title="Редактиране"><span class="far fa-edit"></span></a>
+		{% endif %}
 		{% for theme in joke.themes %}
 			<a href="{{ path('app_joke_listbytheme', {slug: theme.slug}) }}" class="card-link text-muted"><span class="fas fa-tag"></span> {{ theme.name }}</a>
 		{% endfor %}

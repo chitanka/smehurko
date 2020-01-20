@@ -54,7 +54,7 @@ class JokeController extends Controller {
 	/**
 	 * @Route("/{id<\d+>}/edit")
 	 */
-	public function editJoke(Request $request, Joke $joke) {
+	public function edit(Request $request, Joke $joke) {
 		if (!$this->getUser()->canEditJokes()) {
 			return $this->createAccessDeniedException();
 		}
