@@ -268,6 +268,10 @@ class User implements UserInterface {
 		$this->registeredAt = new \DateTime();
 	}
 
+	public function canEditJokes(): bool {
+		return $this->is(self::ROLE_EDITOR);
+	}
+
 	public function canApproveSubmissions(): bool {
 		return $this->is(self::ROLE_EDITOR);
 	}

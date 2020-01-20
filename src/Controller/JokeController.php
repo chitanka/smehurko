@@ -5,6 +5,7 @@ use App\Entity\JokeSubmission;
 use App\Entity\JokeTheme;
 use App\Entity\JokeSource;
 use App\Form\JokeSubmissionType;
+use App\Form\JokeType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -48,6 +49,24 @@ class JokeController extends Controller {
 	 */
 	public function show(Joke $joke) {
 		return $this->render('Joke/show.html.twig', ['joke' => $joke]);
+	}
+
+	/**
+	 * @Route("/{id<\d+>}/edit")
+	 */
+	public function editJoke(Request $request, Joke $joke) {
+		if (!$this->getUser()->canEditJokes()) {
+			return $this->createAccessDeniedException();
+		}
+		$form = $this->createForm(JokeType::class, $joke);
+		$form->handleRequest($request);
+		if ($form->isSubmitted() && $form->isValid()) {
+			$this->storeEntities($form->getData());
+			return $this->redirectToRoute('app_joke_show', ['id' => $joke->getId()]);
+		}
+		return $this->render('Joke/editJoke.html.twig', [
+			'form' => $form->createView(),
+		]);
 	}
 
 	/**

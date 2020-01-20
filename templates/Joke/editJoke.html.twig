@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+{% block content %}
+	<h1>Редактиране на смешка</h1>
+	<style>
+		#joke_content {
+			height: 20em;
+		}
+		#joke_source {
+			height: 2em;
+		}
+	</style>
+	{{ form(form) }}
+{% endblock %}
+{% block custom_javascripts %}
+<script>
+	$('#joke_themes').select2();
+</script>
+{% endblock %}
